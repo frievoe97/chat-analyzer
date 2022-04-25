@@ -26,6 +26,7 @@ export default {
     },
     data() {
         return {
+            showRelatice: true,
             buttonsNames1: ["hour", "minute", "second"],
             buttonsNames2: ["absolute", "relative"],
             dataTest: [],
@@ -43,8 +44,6 @@ export default {
     },
     watch: {
         msgData() {
-            console.log("New Data!");
-            console.log(this.names);
             this.prepareData();
         },
         names() {
@@ -64,7 +63,6 @@ export default {
 
             for (let i = 0; i < this.names.length; i++) {
                 const nameTemp = this.names[i];
-                console.log(nameTemp);
                 let dataObj = {
                     x: [
                         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -87,6 +85,13 @@ export default {
                                 dataObj.y[k]++;
                             }
                         }
+                    }
+                }
+                if (this.showRelatice) {
+                    for (let j = 0; j < dataObj.y.length; j++) {
+                        dataObj.y[j] =
+                            (100 / this.config.names[i].totalMsg) *
+                            dataObj.y[j];
                     }
                 }
                 this.dataTest.push(dataObj);
@@ -112,14 +117,15 @@ export default {
                 }
             }
 
-            for (let i = 0; i < dataObj.y.length; i++) {
-                dataObj.y[i] = (100 / this.config.totalMsg) * dataObj.y[i];
+            if (this.showRelatice) {
+                for (let i = 0; i < dataObj.y.length; i++) {
+                    dataObj.y[i] = (100 / this.config.totalMsg) * dataObj.y[i];
+                }
             }
 
             //let tempData = this.dataTest;
             //this.dataTest = tempData;
             this.dataTest.push(dataObj);
-            console.log(this.dataTest);
         },
     },
 };

@@ -1,6 +1,11 @@
 <template>
     <div>
-        <plotly class="plot" :data="dataTest" :layout="layout"></plotly>
+        <plotly
+            class="plot"
+            :data="dataTest"
+            :layout="layout"
+            :transition="transition"
+        ></plotly>
         <PlotButtons :buttons="buttonsNames" />
     </div>
 </template>
@@ -32,15 +37,23 @@ export default {
                     title: "abc",
                     //mode: "bar",
                     type: "bar",
-                    legend: true,
                 },
             ],
             layout: {
                 title: "Number of messages since start",
                 yaxis: {
                     autorange: true,
+                    automargin: true,
+                    mirror: true,
+                },
+                margin: 0,
+                padding: 0,
+                showlegend: true,
+                legend: {
+                    orientation: "h",
                 },
                 xaxis: {
+                    mirror: true,
                     rangeselector: {
                         buttons: [
                             {
@@ -64,21 +77,18 @@ export default {
                             { step: "all" },
                         ],
                     },
-                    legend: {
-                        showlegend: true,
-                        legend: {
-                            yanchor: "bottom",
-                            y: 0,
-                            xanchor: "right",
-                            x: 1,
-                            orientation: "h",
-                        },
-                    },
                     rangeslider: { autorange: true },
                     type: "date",
                     //autorange: true,
                     //tickformat: "%d/%m",
                 },
+            },
+            transition: {
+                duration: 500,
+                easing: "cubic-in-out",
+            },
+            frame: {
+                duration: 500,
             },
         };
     },
@@ -87,7 +97,6 @@ export default {
     },
     watch: {
         msgData() {
-            console.log("New Data!");
             this.prepareData();
         },
     },

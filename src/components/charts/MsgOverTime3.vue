@@ -40,7 +40,6 @@ export default {
     },
     watch: {
         msgData() {
-            console.log("New Data!");
             this.prepareData();
         },
     },
@@ -66,8 +65,6 @@ export default {
             }
 
             this.dataTest.push(dataObj);
-
-            console.log(this.dataTest);
         },
     },
 };
